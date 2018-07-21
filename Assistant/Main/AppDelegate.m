@@ -20,8 +20,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     XYAMainTabBarViewController *tabBarController = [[XYAMainTabBarViewController alloc] init];
-    XYAMainLoginViewController *loginViewController = [[XYAMainLoginViewController alloc] init];
-    self.window.rootViewController = loginViewController;
+//    XYAMainLoginViewController *loginViewController = [[XYAMainLoginViewController alloc] init];
+    self.window.rootViewController = tabBarController;
     [self.window makeKeyAndVisible];
     return YES;
 }

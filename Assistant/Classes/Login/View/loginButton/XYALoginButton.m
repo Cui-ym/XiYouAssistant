@@ -14,11 +14,12 @@
     [super layoutSubviews];
     CGRect imageRect = self.imageView.frame;
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    imageRect.size = CGSizeMake(23, 23);
+    imageRect.size = CGSizeMake(25, 25);
     imageRect.origin.x = 20;
     imageRect.origin.y = 13;
     
     CGRect titleRect = self.titleLabel.frame;
+    self.titleLabel.font = [UIFont systemFontOfSize:17 weight:UIFontWeightMedium];
     titleRect.origin.x = 120;
     titleRect.origin.y = 15;
     self.imageView.frame = imageRect;

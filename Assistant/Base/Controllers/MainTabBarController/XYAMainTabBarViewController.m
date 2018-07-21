@@ -57,9 +57,14 @@ typedef NS_ENUM(NSInteger, XYMainTabType) {
         Class clazz = NSClassFromString(vcName);
         UIViewController *vc = [[clazz alloc] initWithNibName:nil bundle:nil];
         vc.hidesBottomBarWhenPushed = NO;
-        
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-        nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:nil selectedImage:nil];
+        nav.navigationBar.barTintColor = [UIColor colorWithRed:0.20f green:0.60f blue:0.86f alpha:1.00f];
+        nav.tabBarItem = [[UITabBarItem alloc] initWithTitle:title
+                                                       image:[UIImage imageNamed:imageName]
+                                               selectedImage:[UIImage imageNamed:imageSelected]];
+        [nav.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor],
+                                                    NSFontAttributeName            : [UIFont systemFontOfSize:20]}];
+        nav.navigationBar.translucent = NO;
         nav.tabBarItem.tag = idx;
         [vcArray addObject:nav];
     }];
@@ -72,28 +77,28 @@ typedef NS_ENUM(NSInteger, XYMainTabType) {
     dispatch_once(&onceToken, ^{
         dictionary = @{
                        @(XYMainTabTypeEducation) : @{
-                               TabbarVC             :@"XYAEdcationViewController",
+                               TabbarVC             :@"XYAEducationViewController",
                                TabbarTitle          :@"教务",
-                               TabbarImage          :@"",
-                               TabbarSelectedImage  :@""
+                               TabbarImage          :@"ic_tab_index_education_normal",
+                               TabbarSelectedImage  :@"ic_tab_index_education_selected"
                                },
                        @(XYMainTabTypeLibrary) : @{
                                TabbarVC             :@"XYALibraryViewController",
                                TabbarTitle          :@"图书",
-                               TabbarImage          :@"",
-                               TabbarSelectedImage  :@""
+                               TabbarImage          :@"ic_tab_index_library_normal",
+                               TabbarSelectedImage  :@"ic_tab_index_library_selected"
                                },
                        @(XYMainTabTypeActivity) : @{
                                TabbarVC             :@"XYAActivityViewController",
                                TabbarTitle          :@"活动",
-                               TabbarImage          :@"",
-                               TabbarSelectedImage  :@""
+                               TabbarImage          :@"ic_tab_index_activity_normal",
+                               TabbarSelectedImage  :@"ic_tab_index_activity_selected"
                                },
                        @(XYMainTabTypeMyInfo) : @{
                                TabbarVC             :@"XYAMyInfoViewController",
                                TabbarTitle          :@"我的",
-                               TabbarImage          :@"",
-                               TabbarSelectedImage  :@""
+                               TabbarImage          :@"ic_tab_index_myInfo_normal",
+                               TabbarSelectedImage  :@"ic_tab_index_myInfo_selected"
                                }
                        };
     });

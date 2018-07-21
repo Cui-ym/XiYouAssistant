@@ -7,8 +7,13 @@
 //
 
 #import "XYAEducationViewController.h"
+#import "XYAEducationView.h"
+#import "XYAAttendanceViewController.h"
 
-@interface XYAEducationViewController ()
+@interface XYAEducationViewController ()<XYAEducationViewDelegate>
+
+@property (nonatomic, strong) XYAEducationView *educationView;
+@property (nonatomic, strong) XYAAttendanceViewController *attendanceViewController;
 
 @end
 
@@ -16,7 +21,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.navigationItem.title = @"教务";
+    self.educationView = [[XYAEducationView alloc] initWithFrame:self.view.frame];
+    self.educationView.delegate = self;
+    [self.view addSubview:_educationView];
+    
+}
+
+#pragma mark - XYAEducationViewDelegate
+
+- (void)selectedAttendanceCell {
+    self.attendanceViewController = [[XYAAttendanceViewController alloc] init];
+    [self.navigationController pushViewController:_attendanceViewController animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
