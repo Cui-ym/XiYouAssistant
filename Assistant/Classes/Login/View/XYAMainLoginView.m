@@ -15,8 +15,6 @@
 @property (nonatomic, strong) UIImageView *logoImage;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *subTitleLabel;
-@property (nonatomic, strong) XYALoginButton *personLogin;
-@property (nonatomic, strong) XYALoginButton *weChatLogin;
 
 @end
 

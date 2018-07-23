@@ -8,6 +8,7 @@
 
 #import "XYAMainLoginViewController.h"
 #import "XYAMainLoginView.h"
+#import "XYALoginButton.h"
 
 @interface XYAMainLoginViewController ()
 
@@ -20,7 +21,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.loginView = [[XYAMainLoginView alloc] initWithFrame:self.view.frame];
+    [_loginView.personLogin addTarget:self action:@selector(clickLogin:) forControlEvents:UIControlEventTouchUpInside];
+    [_loginView.weChatLogin addTarget:self action:@selector(clickLogin:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_loginView];
+}
+
+- (void)clickLogin:(UIButton *)sender {
+    
 }
 
 - (void)didReceiveMemoryWarning {

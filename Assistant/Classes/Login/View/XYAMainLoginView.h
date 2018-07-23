@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class XYALoginButton;
+
 @interface XYAMainLoginView : UIView
+
+@property (nonatomic, strong) XYALoginButton *personLogin;
+
+@property (nonatomic, strong) XYALoginButton *weChatLogin;
 
 @end

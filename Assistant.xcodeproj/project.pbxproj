@@ -91,7 +91,11 @@
 		58F353AF21021B9A001E6C16 /* XYATimetableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F353AE21021B9A001E6C16 /* XYATimetableTableViewCell.m */; };
 		58F353B32102BED6001E6C16 /* XYATimetableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F353B22102BED6001E6C16 /* XYATimetableLabel.m */; };
 		58F353BE21031107001E6C16 /* XYAAttendanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F353BD21031107001E6C16 /* XYAAttendanceViewController.m */; };
-		58F353C221031EFF001E6C16 /* XYAHttpSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F353C121031EFF001E6C16 /* XYAHttpSessionManager.m */; };
+		58FF6EA121058062000AE366 /* XYAEducationAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF6EA021058062000AE366 /* XYAEducationAPI.m */; };
+		58FF6EA42105D148000AE366 /* XYAHttpSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF6EA32105D148000AE366 /* XYAHttpSessionManager.m */; };
+		58FF6EA72105D4FE000AE366 /* XYAEducationResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF6EA62105D4FE000AE366 /* XYAEducationResultModel.m */; };
+		58FF6EAD2105FD95000AE366 /* XYALoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF6EAC2105FD95000AE366 /* XYALoginViewController.m */; };
+		58FF6EB02105FDA5000AE366 /* XYALoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58FF6EAF2105FDA5000AE366 /* XYALoginView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -275,8 +279,16 @@
 		58F353B22102BED6001E6C16 /* XYATimetableLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYATimetableLabel.m; sourceTree = "<group>"; };
 		58F353BC21031107001E6C16 /* XYAAttendanceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYAAttendanceViewController.h; sourceTree = "<group>"; };
 		58F353BD21031107001E6C16 /* XYAAttendanceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYAAttendanceViewController.m; sourceTree = "<group>"; };
-		58F353C021031EFF001E6C16 /* XYAHttpSessionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYAHttpSessionManager.h; sourceTree = "<group>"; };
-		58F353C121031EFF001E6C16 /* XYAHttpSessionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYAHttpSessionManager.m; sourceTree = "<group>"; };
+		58FF6E9F21058062000AE366 /* XYAEducationAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYAEducationAPI.h; sourceTree = "<group>"; };
+		58FF6EA021058062000AE366 /* XYAEducationAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYAEducationAPI.m; sourceTree = "<group>"; };
+		58FF6EA22105D148000AE366 /* XYAHttpSessionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYAHttpSessionManager.h; sourceTree = "<group>"; };
+		58FF6EA32105D148000AE366 /* XYAHttpSessionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYAHttpSessionManager.m; sourceTree = "<group>"; };
+		58FF6EA52105D4FE000AE366 /* XYAEducationResultModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYAEducationResultModel.h; sourceTree = "<group>"; };
+		58FF6EA62105D4FE000AE366 /* XYAEducationResultModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYAEducationResultModel.m; sourceTree = "<group>"; };
+		58FF6EAB2105FD95000AE366 /* XYALoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYALoginViewController.h; sourceTree = "<group>"; };
+		58FF6EAC2105FD95000AE366 /* XYALoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYALoginViewController.m; sourceTree = "<group>"; };
+		58FF6EAE2105FDA5000AE366 /* XYALoginView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYALoginView.h; sourceTree = "<group>"; };
+		58FF6EAF2105FDA5000AE366 /* XYALoginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYALoginView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -329,8 +341,8 @@
 			children = (
 				58F352802100CB52001E6C16 /* Main */,
 				58F352B52101BACC001E6C16 /* Resource */,
+				58FF6E9C21057FE7000AE366 /* HTTP */,
 				58F352C92101BE73001E6C16 /* Vendor */,
-				58F352B4210185B0001E6C16 /* API */,
 				58F352AA210171B8001E6C16 /* Base */,
 				58F353B02102BE96001E6C16 /* Custom */,
 				58F352812100CBAB001E6C16 /* Classes */,
@@ -566,15 +578,6 @@
 			path = MainTabBarController;
 			sourceTree = "<group>";
 		};
-		58F352B4210185B0001E6C16 /* API */ = {
-			isa = PBXGroup;
-			children = (
-				58F353C021031EFF001E6C16 /* XYAHttpSessionManager.h */,
-				58F353C121031EFF001E6C16 /* XYAHttpSessionManager.m */,
-			);
-			path = API;
-			sourceTree = "<group>";
-		};
 		58F352B52101BACC001E6C16 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -609,6 +612,8 @@
 			children = (
 				58F352C32101BD2F001E6C16 /* XYAMainLoginViewController.h */,
 				58F352C42101BD2F001E6C16 /* XYAMainLoginViewController.m */,
+				58FF6EAB2105FD95000AE366 /* XYALoginViewController.h */,
+				58FF6EAC2105FD95000AE366 /* XYALoginViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -626,6 +631,8 @@
 				58F3537C2101D045001E6C16 /* loginButton */,
 				58F352C62101BD49001E6C16 /* XYAMainLoginView.h */,
 				58F352C72101BD49001E6C16 /* XYAMainLoginView.m */,
+				58FF6EAE2105FDA5000AE366 /* XYALoginView.h */,
+				58FF6EAF2105FDA5000AE366 /* XYALoginView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -859,6 +866,8 @@
 		58F353A521020473001E6C16 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				58FF6EA52105D4FE000AE366 /* XYAEducationResultModel.h */,
+				58FF6EA62105D4FE000AE366 /* XYAEducationResultModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -890,6 +899,25 @@
 				58F353BD21031107001E6C16 /* XYAAttendanceViewController.m */,
 			);
 			path = Attendance;
+			sourceTree = "<group>";
+		};
+		58FF6E9C21057FE7000AE366 /* HTTP */ = {
+			isa = PBXGroup;
+			children = (
+				58FF6EA22105D148000AE366 /* XYAHttpSessionManager.h */,
+				58FF6EA32105D148000AE366 /* XYAHttpSessionManager.m */,
+				58FF6E9D21057FF3000AE366 /* API */,
+			);
+			path = HTTP;
+			sourceTree = "<group>";
+		};
+		58FF6E9D21057FF3000AE366 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				58FF6E9F21058062000AE366 /* XYAEducationAPI.h */,
+				58FF6EA021058062000AE366 /* XYAEducationAPI.m */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1056,6 +1084,7 @@
 				58F3531C2101BEBE001E6C16 /* UIWebView+AFNetworking.m in Sources */,
 				58F3536B2101BECC001E6C16 /* SDWebImageManager.m in Sources */,
 				58F353752101BECC001E6C16 /* NSData+ImageContentType.m in Sources */,
+				58FF6EA121058062000AE366 /* XYAEducationAPI.m in Sources */,
 				58F352EA2101BEB3001E6C16 /* View+MASAdditions.m in Sources */,
 				58F352E42101BEB3001E6C16 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				58F3531E2101BEBE001E6C16 /* AFImageDownloader.m in Sources */,
@@ -1066,8 +1095,10 @@
 				58F353702101BECC001E6C16 /* UIImage+MultiFormat.m in Sources */,
 				58F353172101BEBE001E6C16 /* UIRefreshControl+AFNetworking.m in Sources */,
 				58F3536C2101BECC001E6C16 /* SDWebImageDecoder.m in Sources */,
+				58FF6EA72105D4FE000AE366 /* XYAEducationResultModel.m in Sources */,
 				58F352A621016E62001E6C16 /* XYAActivityViewController.m in Sources */,
 				58F3536F2101BECC001E6C16 /* UIImage+GIF.m in Sources */,
+				58FF6EA42105D148000AE366 /* XYAHttpSessionManager.m in Sources */,
 				58F353B32102BED6001E6C16 /* XYATimetableLabel.m in Sources */,
 				58F3536D2101BECC001E6C16 /* UIImageView+HighlightedWebCache.m in Sources */,
 				58F352E52101BEB3001E6C16 /* ViewController+MASAdditions.m in Sources */,
@@ -1094,13 +1125,14 @@
 				58F352C82101BD49001E6C16 /* XYAMainLoginView.m in Sources */,
 				58F353AF21021B9A001E6C16 /* XYATimetableTableViewCell.m in Sources */,
 				58F353722101BECC001E6C16 /* SDWebImagePrefetcher.m in Sources */,
+				58FF6EAD2105FD95000AE366 /* XYALoginViewController.m in Sources */,
 				58F352C52101BD2F001E6C16 /* XYAMainLoginViewController.m in Sources */,
 				58F3533B2101BEC5001E6C16 /* JSONKeyMapper.m in Sources */,
-				58F353C221031EFF001E6C16 /* XYAHttpSessionManager.m in Sources */,
 				58F3531D2101BEBE001E6C16 /* AFAutoPurgingImageCache.m in Sources */,
 				58F353202101BEBE001E6C16 /* AFHTTPSessionManager.m in Sources */,
 				58F353732101BECC001E6C16 /* SDImageCache.m in Sources */,
 				58F352EB2101BEB3001E6C16 /* MASConstraint.m in Sources */,
+				58FF6EB02105FDA5000AE366 /* XYALoginView.m in Sources */,
 				58F353762101BECC001E6C16 /* UIImageView+WebCache.m in Sources */,
 				58F3533C2101BEC5001E6C16 /* JSONModel.m in Sources */,
 				58F353232101BEBE001E6C16 /* AFNetworkReachabilityManager.m in Sources */,
