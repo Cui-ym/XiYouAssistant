@@ -15,10 +15,10 @@
     self = [super init];
     if (self) {
         self.textColor = [UIColor whiteColor];
-        self.font = [UIFont systemFontOfSize:20];
-        self.adjustsFontSizeToFitWidth = YES;
-        self.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-        self.minimumScaleFactor = 0.1;
+//        self.font = [UIFont systemFontOfSize:20];
+//        self.adjustsFontSizeToFitWidth = YES;
+//        self.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
+//        self.minimumFontSize = 2;
     }
     return self;
 }

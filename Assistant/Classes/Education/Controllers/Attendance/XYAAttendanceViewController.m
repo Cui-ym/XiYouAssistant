@@ -14,6 +14,10 @@
 
 @implementation XYAAttendanceViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"考勤信息";

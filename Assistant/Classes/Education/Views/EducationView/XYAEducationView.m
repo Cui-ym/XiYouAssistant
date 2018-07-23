@@ -29,6 +29,8 @@
         self.tableView.dataSource = self;
         [self addSubview:_tableView];
         
+        NSLog(@"%lf", self.frame.size.width);
+        
         self.backgroundColor = [UIColor whiteColor];
     }
     return self;
