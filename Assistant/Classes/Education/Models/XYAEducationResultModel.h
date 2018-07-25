@@ -10,10 +10,10 @@
 
 @interface XYAEducationResultModel : JSONModel
 
-@property (nonatomic, assign) BOOL IsSucceed;
+@property (nonatomic, assign) NSInteger IsSucceed;
 
-@property (nonatomic, copy) NSString *Msg;
+@property (nonatomic, copy) NSString <Optional>*Msg;
 
-@property (nonatomic, copy) NSArray *Obj;
+@property (nonatomic, copy) NSDictionary <Optional>*Obj;
 
 @end

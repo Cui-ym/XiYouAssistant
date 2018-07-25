@@ -7,6 +7,7 @@
 //
 
 #import "XYAMainLoginViewController.h"
+#import "XYALoginViewController.h"
 #import "XYAMainLoginView.h"
 #import "XYALoginButton.h"
 
@@ -18,6 +19,16 @@
 
 @implementation XYAMainLoginViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.hidden = NO;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.loginView = [[XYAMainLoginView alloc] initWithFrame:self.view.frame];
@@ -27,7 +38,12 @@
 }
 
 - (void)clickLogin:(UIButton *)sender {
-    
+    XYALoginViewController *loginViewController = [[XYALoginViewController alloc] init];
+    if ([sender.titleLabel.text  isEqual: @"学号登陆"]) {
+        loginViewController.type = @"智慧教室";
+    }
+    loginViewController.type = @"教务系统";
+    [self.navigationController pushViewController:loginViewController animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

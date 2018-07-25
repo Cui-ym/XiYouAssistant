@@ -8,8 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+@class XYAUnderLinerTextField;
+
 @interface XYALoginView : UIView
 
-@property (nonatomic, strong) UILabel *title;
+@property (nonatomic, strong) UILabel *titleLabel;
+
+@property (nonatomic, strong) UIImageView *vercodeimageView;
+
+@property (nonatomic, strong) UIButton *changeButton;
+
+@property (nonatomic, strong) UIButton *loginButton;
+
+@property (nonatomic, strong) XYAUnderLinerTextField *vercodeField;
+
+@property (nonatomic, strong) XYAUnderLinerTextField *passwordField;
+
+@property (nonatomic, strong) XYAUnderLinerTextField *userNameField;
 
 @end

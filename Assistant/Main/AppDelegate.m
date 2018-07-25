@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "XYAMainTabBarViewController.h"
 #import "XYAMainLoginViewController.h"
+#import "XYALoginViewController.h"
 
 @interface AppDelegate ()
 
@@ -19,9 +20,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    XYAMainTabBarViewController *tabBarController = [[XYAMainTabBarViewController alloc] init];
-//    XYAMainLoginViewController *loginViewController = [[XYAMainLoginViewController alloc] init];
-    self.window.rootViewController = tabBarController;
+//    XYAMainTabBarViewController *tabBarController = [[XYAMainTabBarViewController alloc] init];
+    XYAMainLoginViewController *loginViewController = [[XYAMainLoginViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+    self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
     return YES;
 }

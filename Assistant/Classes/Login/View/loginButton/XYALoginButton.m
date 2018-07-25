@@ -7,6 +7,7 @@
 //
 
 #import "XYALoginButton.h"
+#import "Masonry.h"
 
 @implementation XYALoginButton
 
@@ -18,11 +19,11 @@
     imageRect.origin.x = 20;
     imageRect.origin.y = 13;
     
-    CGRect titleRect = self.titleLabel.frame;
     self.titleLabel.font = [UIFont systemFontOfSize:17 weight:UIFontWeightMedium];
-    titleRect.origin.x = 120;
-    titleRect.origin.y = 15;
+    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self);
+    }];
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.imageView.frame = imageRect;
-    self.titleLabel.frame = titleRect;
 }
 @end

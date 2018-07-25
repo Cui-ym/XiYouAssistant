@@ -11,8 +11,12 @@
 @interface XYAEducationAPI : NSObject
 
 @property (nonatomic, copy) NSString *URL;
+
 @property (nonatomic, copy) NSString *cookie;
+
 @property (nonatomic, strong) NSMutableDictionary *param;
+
++(instancetype)shareEducationAPI;
 
 // 获取验证码
 - (void)getCookieAndVerCodeApi;
@@ -24,10 +28,10 @@
 - (void)getTermList;
 
 // 每学期课程
-- (void)getLessionWithTerm:(NSString *)term;
+- (void)getLessionWithTerm:(NSNumber *)term;
 
 // 每星期课程
-- (void)getLessionWithWeek:(NSString *)week term:(NSString *)term;
+- (void)getLessionWithWeek:(NSNumber *)week term:(NSNumber *)term;
 
 // 考勤信息
 - (void)getAttendListWithTimeDate:(NSString *)timeDate status:(NSString *)status flagArray:(NSArray *)flagArray page:(NSInteger)page Row:(NSInteger)row;

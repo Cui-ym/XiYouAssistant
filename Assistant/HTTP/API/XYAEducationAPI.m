@@ -10,16 +10,30 @@
 
 @implementation XYAEducationAPI
 
+static XYAEducationAPI *_kXYAEducationAPI = nil;
+
++ (instancetype)shareEducationAPI {
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _kXYAEducationAPI = [[super alloc] init];
+    });
+    
+    return _kXYAEducationAPI;
+}
+
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-    
+        self.param = [NSMutableDictionary dictionary];
+        self.URL = @"";
+        self.cookie = @"";
     }
     return self;
 }
 
-- (void)getCookieAndVerCode {
+- (void)getCookieAndVerCodeApi {
     self.URL = @"http://jwkq.xupt.edu.cn:8080/Common/GetValidateCode";
 }
 
@@ -37,14 +51,14 @@
     [self.param setValue:@true forKey:@"json"];
 }
 
-- (void)getLessionWithTerm:(NSString *)term {
+- (void)getLessionWithTerm:(NSNumber *)term {
     self.URL = @"http://jwkq.xupt.edu.cn:8080/User/GetLessionByTerm";
     self.param = [NSMutableDictionary dictionary];
     [self.param setValue:@true forKey:@"json"];
     [self.param setValue:term forKey:@"term_no"];
 }
 
-- (void)getLessionWithWeek:(NSString *)week term:(NSString *)term {
+- (void)getLessionWithWeek:(NSNumber *)week term:(NSNumber *)term {
     self.URL = @"http://jwkq.xupt.edu.cn:8080/User/GetStuClass";
     self.param = [NSMutableDictionary dictionary];
     [self.param setValue:@true forKey:@"json"];
