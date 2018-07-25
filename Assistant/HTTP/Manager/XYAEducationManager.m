@@ -40,6 +40,7 @@
         if ([dictionary objectForKey:@"Set-Cookie"] != NULL) {
             self.educationAPI = [XYAEducationAPI shareEducationAPI];
             self.educationAPI.cookie = cookie;
+            NSLog(@"%@", cookie);
         }
         
     } error:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -53,9 +54,9 @@
     NSDictionary *header = @{@"Cookie" : _educationAPI.cookie};
     XYAURLSessionManager *manager = [XYAURLSessionManager sharedManager];
     [manager doPost:_educationAPI.URL withParam:_educationAPI.param withHeader:header success:^(XYAEducationResultModel * _Nullable resultModel) {
-        NSLog(@"登陆成功%@", resultModel);
+        successBlock(resultModel);
     } error:^(NSError * _Nonnull error) {
-        NSLog(@"登陆失败%@", error);
+        errorBlock(error);
     }];
     
 }

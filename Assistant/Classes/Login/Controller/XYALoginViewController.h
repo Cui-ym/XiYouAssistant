@@ -12,4 +12,6 @@
 
 @property (nonatomic, copy) NSString *type;
 
+@property (nonatomic, copy) NSString *nextController;
+
 @end

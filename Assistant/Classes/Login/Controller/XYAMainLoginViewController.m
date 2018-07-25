@@ -43,6 +43,7 @@
         loginViewController.type = @"智慧教室";
     }
     loginViewController.type = @"教务系统";
+    loginViewController.nextController = self.nextController;
     [self.navigationController pushViewController:loginViewController animated:YES];
 }
 

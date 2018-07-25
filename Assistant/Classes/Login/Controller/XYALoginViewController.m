@@ -11,9 +11,10 @@
 #import "XYAEducationManager.h"
 #import "XYAEducationAPI.h"
 #import "XYALoginView.h"
-
-
 #import "AFNetworking.h"
+
+#import "XYAMainTabBarViewController.h"
+
 
 @interface XYALoginViewController ()
 
@@ -47,6 +48,17 @@
     [self.loginView.loginButton addTarget:self action:@selector(clickLoginButton:) forControlEvents:UIControlEventTouchUpInside];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldChange) name:UITextFieldTextDidChangeNotification object:nil];
     // Do any additional setup after loading the view.
+}
+
+#pragma mark - 页面跳转
+
+- (void)pushNextController {
+    if ([self.nextController  isEqual: @"首页"]) {
+        XYAMainTabBarViewController *tabBarController = [[XYAMainTabBarViewController alloc] init];
+        [self presentViewController:tabBarController animated:YES completion:^{
+            
+        }];
+    }
 }
 
 #pragma mark - KVO
@@ -85,9 +97,18 @@
 
 - (void)educationLogin {
     XYAEducationManager *manager = [[XYAEducationManager alloc] init];
-    [manager fetchEducationLoginWithUsername:_loginView.userNameField.text password:_loginView.passwordField.text vercode:_loginView.vercodeField.text success:^(XYAEducationResultModel * _Nullable educationResult) {
-        NSLog(@"%@", educationResult);
+    [manager fetchEducationLoginWithUsername:_loginView.userNameField.text password:_loginView.passwordField.text vercode:_loginView.vercodeField.text  success:^(XYAEducationResultModel * _Nullable educationResult) {
+        NSLog(@"登陆成功");
+//        NSLog(@"%@", educationResult);
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        
+        [userDefaults setObject:_loginView.userNameField.text forKey:@"username"];
+        [userDefaults setObject:_loginView.passwordField.text forKey:@"password"];
+        [userDefaults synchronize];
+        
+        [self pushNextController];
     } error:^(NSError * _Nonnull error) {
+        
         NSLog(@"error  %@", error);
     }];
 }

@@ -20,10 +20,20 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-//    XYAMainTabBarViewController *tabBarController = [[XYAMainTabBarViewController alloc] init];
-    XYAMainLoginViewController *loginViewController = [[XYAMainLoginViewController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-    self.window.rootViewController = nav;
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    [userDefaults removeObjectForKey:@"username"];
+//    [userDefaults removeObjectForKey:@"password"];
+    
+    if ([userDefaults objectForKey:@"username"] != nil) {
+        XYAMainTabBarViewController *tabBarController = [[XYAMainTabBarViewController alloc] init];
+        self.window.rootViewController = tabBarController;
+    } else {
+        XYAMainLoginViewController *loginViewController = [[XYAMainLoginViewController alloc] init];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+        loginViewController.nextController = @"首页";
+        self.window.rootViewController = nav;
+    }
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

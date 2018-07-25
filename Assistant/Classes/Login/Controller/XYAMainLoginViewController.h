@@ -10,4 +10,6 @@
 
 @interface XYAMainLoginViewController : UIViewController
 
+@property (nonatomic, copy) NSString *nextController;
+
 @end
