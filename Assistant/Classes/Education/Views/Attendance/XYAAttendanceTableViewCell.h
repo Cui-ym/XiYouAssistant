@@ -20,4 +20,6 @@
 
 @property (nonatomic, strong) UILabel *detailLabel;
 
+@property (nonatomic, strong) UIButton *appealButton;
+
 @end

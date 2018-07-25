@@ -7,9 +7,10 @@
 //
 
 #import "XYAAttendanceView.h"
+#import "XYAAttendanceTableViewCell.h"
 #import "Masonry.h"
 
-@interface XYAAttendanceView ()
+@interface XYAAttendanceView () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UIImageView *timeImageView;
 
@@ -27,34 +28,101 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
-        self.backgroundColor = [UIColor whiteColor];
-        
-        self.classImageView = [[UIImageView alloc] init];
-        [self addSubview:_classImageView];
-        
-        self.timeImageView = [[UIImageView alloc] init];
-        [self addSubview:_timeImageView];
-        
-        self.beginTimeButton = [[UIButton alloc] init];
-        [self addSubview:_beginTimeButton];
-        
-        self.endTimeButton = [[UIButton alloc] init];
-        [self addSubview:_endTimeButton];
-        
-        self.classButton = [[UIButton alloc] init];
-        [self addSubview:_classButton];
-        
-        self.zhiLabel = [[UILabel alloc] init];
-        [self addSubview:_zhiLabel];
-        
-        self.backView = [[UIView alloc] init];
-        [self addSubview:_backView];
-        
-        self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-        [_backView addSubview:_tableView];
+        [self initUI];
     }
     return self;
+}
+
+#pragma mark - TableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 40.0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 0.01;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.01;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return nil;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    return nil;
+}
+
+#pragma mark - tableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 10;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    XYAAttendanceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"noButtonCell" forIndexPath:indexPath];
+    cell.timeLabel.text = @"2018.06.06";
+    cell.weekLabel.text = @"星期三";
+    cell.tagLabel.text = @"1-2";
+    cell.classLabel.text = @"FZ155";
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    NSArray *array = [NSArray arrayWithObjects:@"正常", @"请假", @"正常", @"旷课", @"迟到", @"迟到", @"正常", @"正常", @"正常", @"正常", nil];
+    cell.detailLabel.text = array[indexPath.row];
+    if([cell.detailLabel.text  isEqual: @"正常"]) {
+        cell.appealButton.userInteractionEnabled = NO;
+        cell.detailLabel.textColor = [UIColor greenColor];
+        cell.appealButton.backgroundColor = [UIColor clearColor];
+    } else if ([cell.detailLabel.text isEqual:@"请假"]) {
+        cell.appealButton.userInteractionEnabled = NO;
+        cell.detailLabel.textColor = [UIColor yellowColor];
+        cell.appealButton.backgroundColor = [UIColor clearColor];
+    } else if ([cell.detailLabel.text isEqual:@"迟到"]) {
+        cell.appealButton.userInteractionEnabled = NO;
+        cell.detailLabel.textColor = [UIColor orangeColor];
+        cell.appealButton.backgroundColor = [UIColor clearColor];
+    } else if ([cell.detailLabel.text isEqual:@"旷课"]) {
+        cell.appealButton.userInteractionEnabled = YES;
+        cell.detailLabel.textColor = [UIColor redColor];
+        cell.appealButton.backgroundColor = [UIColor redColor];
+    }
+    return cell;
+}
+
+#pragma mark - initUI
+- (void)initUI {
+    self.backgroundColor = [UIColor whiteColor];
+    
+    self.classImageView = [[UIImageView alloc] init];
+    [self addSubview:_classImageView];
+    
+    self.timeImageView = [[UIImageView alloc] init];
+    [self addSubview:_timeImageView];
+    
+    self.beginTimeButton = [[UIButton alloc] init];
+    [self addSubview:_beginTimeButton];
+    
+    self.endTimeButton = [[UIButton alloc] init];
+    [self addSubview:_endTimeButton];
+    
+    self.classButton = [[UIButton alloc] init];
+    [self addSubview:_classButton];
+    
+    self.zhiLabel = [[UILabel alloc] init];
+    [self addSubview:_zhiLabel];
+    
+    self.backView = [[UIView alloc] init];
+    [self addSubview:_backView];
+    
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+    [self.tableView registerClass:[XYAAttendanceTableViewCell class] forCellReuseIdentifier:@"noButtonCell"];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [_backView addSubview:_tableView];
 }
 
 - (void)layoutSubviews {
