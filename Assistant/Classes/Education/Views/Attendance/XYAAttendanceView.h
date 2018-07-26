@@ -18,4 +18,6 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 
+- (void)viewAddPickerView:(NSString *)type;
+
 @end

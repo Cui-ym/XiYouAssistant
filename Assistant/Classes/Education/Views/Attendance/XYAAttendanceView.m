@@ -8,9 +8,12 @@
 
 #import "XYAAttendanceView.h"
 #import "XYAAttendanceTableViewCell.h"
+#import "Assistant-Bridging-Header.h"
 #import "Masonry.h"
 
-@interface XYAAttendanceView () <UITableViewDelegate, UITableViewDataSource>
+#define RGB(__r,__g,__b) [UIColor colorWithRed:(__r)/255.0 green:(__g)/255.0 blue:(__b)/255.0 alpha:1]
+
+@interface XYAAttendanceView () <UITableViewDelegate, UITableViewDataSource, ChartViewDelegate, IChartAxisValueFormatter>
 
 @property (nonatomic, strong) UIImageView *timeImageView;
 
@@ -19,6 +22,18 @@
 @property (nonatomic, strong) UIImageView *classImageView;
 
 @property (nonatomic, strong) UIView *backView;
+
+/// 饼状图
+@property (nonatomic, strong) PieChartView *pieChartView;
+
+@property (nonatomic, strong) NSArray *xTitles;
+
+@property (nonatomic, strong) NSArray *colorArray;
+
+/// 选择器
+@property (nonatomic, strong) UIDatePicker *datePicker;
+
+@property (nonatomic, strong) UIPickerView *pickerView;
 
 @end
 
@@ -29,6 +44,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self initUI];
+        
+        
     }
     return self;
 }
@@ -94,6 +111,7 @@
 }
 
 #pragma mark - initUI
+
 - (void)initUI {
     self.backgroundColor = [UIColor whiteColor];
     
@@ -104,12 +122,15 @@
     [self addSubview:_timeImageView];
     
     self.beginTimeButton = [[UIButton alloc] init];
+    self.beginTimeButton.tag = 1001;
     [self addSubview:_beginTimeButton];
     
     self.endTimeButton = [[UIButton alloc] init];
+    self.endTimeButton.tag = 1002;
     [self addSubview:_endTimeButton];
     
     self.classButton = [[UIButton alloc] init];
+    self.classButton.tag = 1003;
     [self addSubview:_classButton];
     
     self.zhiLabel = [[UILabel alloc] init];
@@ -157,7 +178,7 @@
     self.beginTimeButton.layer.borderWidth = 3;
     self.beginTimeButton.layer.borderColor = [UIColor colorWithRed:0.36f green:0.68f blue:0.89f alpha:1.00f].CGColor;
     [self.beginTimeButton setTitleColor:[UIColor colorWithRed:0.36f green:0.68f blue:0.89f alpha:1.00f] forState:UIControlStateNormal];
-    [self.beginTimeButton setTitle:@"09-01" forState:UIControlStateNormal];
+    [self.beginTimeButton setTitle:@"18-09-01" forState:UIControlStateNormal];
     
     [self.endTimeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.mas_right).offset(-15);
@@ -170,7 +191,7 @@
     self.endTimeButton.layer.borderWidth = 3;
     self.endTimeButton.layer.borderColor = [UIColor colorWithRed:0.36f green:0.68f blue:0.89f alpha:1.00f].CGColor;
     [self.endTimeButton setTitleColor:[UIColor colorWithRed:0.36f green:0.68f blue:0.89f alpha:1.00f] forState:UIControlStateNormal];
-    [self.endTimeButton setTitle:@"09-30" forState:UIControlStateNormal];
+    [self.endTimeButton setTitle:@"18-09-30" forState:UIControlStateNormal];
     
     [self.zhiLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.beginTimeButton.mas_right);
@@ -194,6 +215,13 @@
     [self.classButton setTitleColor:[UIColor colorWithRed:0.36f green:0.68f blue:0.89f alpha:1.00f] forState:UIControlStateNormal];
     [self.classButton setTitle:@"C语言程序设计" forState:UIControlStateNormal];
     
+    [self.pieChartView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self);
+        make.width.and.height.equalTo(self.mas_width).multipliedBy(0.65);
+        make.top.equalTo(self.mas_bottom).multipliedBy(0.2);
+    }];
+    [self setData];
+    
     [self.backView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(self.mas_height).multipliedBy(0.3);
         make.centerX.equalTo(self);
@@ -216,6 +244,129 @@
     self.tableView.showsVerticalScrollIndicator = NO;
     
 }
+- (void)viewAddPickerView:(NSString *)type {
+    if ([type isEqual:@"time"]) {
+        _datePicker = [[UIDatePicker alloc] init];
+        _datePicker.backgroundColor = [UIColor whiteColor];
+        self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"zh"];
+        self.datePicker.datePickerMode = UIDatePickerModeDate;
+        [self.datePicker setMinimumDate:[NSDate date]];
+        NSDate *date = [NSDate date];
+        [self addSubview:_datePicker];
+    }
+}
 
+#pragma mark - PeiChartView
+- (void)setData
+{
+    
+    double mult = 4;
+    NSArray *array = [NSArray arrayWithObjects:@"正常", @"迟到", @"旷课", @"请假", nil];
+    NSMutableArray *values = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 4; i++) {
+        [values addObject:[[PieChartDataEntry alloc] initWithValue:(arc4random_uniform(mult + 1)) label:array[i]]];
+    }
+    
+    PieChartDataSet *dataSet = [[PieChartDataSet alloc] initWithValues:values label:@""];
+    dataSet.sliceSpace = 2.0;
+    
+    // add a lot of colors
+    
+    NSMutableArray *colors = [[NSMutableArray alloc] init];
+    [colors addObjectsFromArray:ChartColorTemplates.vordiplom];
+    [colors addObjectsFromArray:ChartColorTemplates.joyful];
+    [colors addObjectsFromArray:ChartColorTemplates.colorful];
+    [colors addObjectsFromArray:ChartColorTemplates.liberty];
+    [colors addObjectsFromArray:ChartColorTemplates.pastel];
+    [colors addObject:[UIColor colorWithRed:51/255.f green:181/255.f blue:229/255.f alpha:1.f]];
+    
+    dataSet.colors = colors;
+    
+    PieChartData *data = [[PieChartData alloc] initWithDataSet:dataSet];
+    
+    NSNumberFormatter *pFormatter = [[NSNumberFormatter alloc] init];
+    pFormatter.numberStyle = NSNumberFormatterPercentStyle;
+    pFormatter.maximumFractionDigits = 1;
+    pFormatter.multiplier = @1.f;
+    pFormatter.percentSymbol = @" %";
+    [data setValueFormatter:[[ChartDefaultValueFormatter alloc] initWithFormatter:pFormatter]];
+    [data setValueFont:[UIFont systemFontOfSize:12 weight:UIFontWeightMedium]];
+    [data setValueTextColor:UIColor.whiteColor];
+    
+    _pieChartView.data = data;
+    [_pieChartView highlightValues:nil];
+    
+    
+    
+}
+
+#pragma mark - ChartView x-Titles Datasource
+- (NSString *)stringForValue:(double)value axis:(ChartAxisBase *)axis
+{
+    return self.xTitles[(int)value % self.xTitles.count];
+}
+#pragma mark - ChartView Delegate
+- (void)chartScaled:(ChartViewBase *)chartView scaleX:(CGFloat)scaleX scaleY:(CGFloat)scaleY
+{
+    NSLog(@"%2f %2f", scaleX, scaleY);
+}
+
+- (void)chartValueSelected:(ChartViewBase *)chartView entry:(ChartDataEntry *)entry highlight:(ChartHighlight *)highlight
+{
+    
+}
+
+#pragma mark - getter and setter
+- (PieChartView *)pieChartView
+{
+    if (_pieChartView == nil) {
+        
+        _pieChartView = [[PieChartView alloc] init];
+        [self addSubview:_pieChartView];
+        [_pieChartView animateWithXAxisDuration:1 easingOption:ChartEasingOptionEaseInSine];
+        _pieChartView.delegate = self;
+        _pieChartView.rotationAngle = -90.0;
+        
+        ChartLegend *legend = _pieChartView.legend;
+        legend.horizontalAlignment = ChartLegendHorizontalAlignmentRight;
+        legend.verticalAlignment = ChartLegendVerticalAlignmentTop;
+        legend.orientation = ChartLegendOrientationVertical;
+        legend.drawInside = NO;
+        legend.xEntrySpace = 7.0;
+        legend.yEntrySpace = 0.0;
+        legend.yOffset = 0.0;
+        
+        // entry label styling
+        _pieChartView.entryLabelColor = UIColor.whiteColor;
+        _pieChartView.entryLabelFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.f];
+        
+        _pieChartView.drawCenterTextEnabled = YES;
+        _pieChartView.drawHoleEnabled = YES;
+        NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        paragraphStyle.lineBreakMode =NSLineBreakByTruncatingTail;
+        paragraphStyle.alignment = NSTextAlignmentCenter;
+        NSMutableAttributedString *centerText = [[NSMutableAttributedString alloc] initWithString:@"abcdefg"];
+        [centerText setAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:12 weight:UIFontWeightMedium], NSParagraphStyleAttributeName: paragraphStyle, NSForegroundColorAttributeName: [UIColor orangeColor] } range:NSMakeRange(0, centerText.length)];
+        _pieChartView.centerAttributedText = centerText;
+    }
+    return _pieChartView;
+}
+
+- (NSArray *)colorArray
+{
+    if (_colorArray == nil) { //橘黄色  蓝色 淡绿色 浅紫色 浅红色
+        _colorArray = @[ RGB(242, 152, 80), RGB(92, 178, 240), RGB(158, 202, 97), RGB(219, 95, 153), RGB(233, 84, 83)];
+    }
+    return _colorArray;
+}
+
+- (NSArray *)xTitles
+{
+    if (_xTitles == nil) {
+        
+        _xTitles = @[@"正常", @"迟到", @"旷课", @"请假"];
+    }
+    return _xTitles;
+}
 
 @end

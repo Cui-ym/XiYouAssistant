@@ -25,7 +25,17 @@
     [super viewDidLoad];
     self.navigationItem.title = @"考勤信息";
     self.attendanceView = [[XYAAttendanceView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    [self.attendanceView.beginTimeButton addTarget:self action:@selector(clickAttendanceButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.attendanceView.endTimeButton addTarget:self action:@selector(clickAttendanceButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.attendanceView.classButton addTarget:self action:@selector(clickAttendanceButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_attendanceView];
+}
+
+#pragma mark - clickAction
+
+- (void)clickAttendanceButton:(UIButton *)sender {
+    NSLog(@"click");
+    [self.attendanceView viewAddPickerView:@"time"];
 }
 
 - (void)didReceiveMemoryWarning {
