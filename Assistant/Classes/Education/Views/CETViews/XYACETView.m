@@ -78,13 +78,13 @@
     self.scoreTableView.dataSource = self;
     [self.lineView addSubview:_scoreTableView];
     self.scoreTableView.userInteractionEnabled = NO;
-    self.scoreTableView.backgroundColor = [UIColor blueColor];
+    self.scoreTableView.backgroundColor = [UIColor whiteColor];
     
     [self.scoreTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.lineView.mas_bottom).multipliedBy(0.17);
+        make.top.equalTo(self.lineView.mas_bottom).multipliedBy(0.13);
         make.centerX.equalTo(self.lineView);
-        make.height.equalTo(self.lineView.mas_height).multipliedBy(0.74);
-        make.width.equalTo(self.lineView.mas_width).multipliedBy(0.63);
+        make.height.equalTo(self.lineView.mas_height).multipliedBy(0.8);
+        make.width.equalTo(self.lineView.mas_width).multipliedBy(0.7);
     }];
 }
 
@@ -191,7 +191,7 @@
         titleCell = [tableView dequeueReusableCellWithIdentifier:@"titleCell"];
         if (titleCell == nil) {
             titleCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"titleCell"];
-            UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width * 0.4, self.frame.size.height * 0.054)];
+            UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width * 0.47, self.frame.size.height * 0.054)];
             titleLabel.textColor = [UIColor colorWithRed:0.20f green:0.60f blue:0.86f alpha:1.00f];
             titleLabel.text = @"国家CET-4考试成绩";
             titleLabel.font = [UIFont systemFontOfSize:14];
@@ -209,8 +209,11 @@
         scoreCell.textLabel.textColor = [UIColor colorWithRed:0.20f green:0.60f blue:0.86f alpha:1.00f];
         scoreCell.textLabel.font = [UIFont systemFontOfSize:14];
         scoreCell.textLabel.text = array[indexPath.row - 1];
+        
+        scoreCell.detailTextLabel.textColor = [UIColor blackColor];
+        scoreCell.detailTextLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightMedium];
         scoreCell.detailTextLabel.text = array1[indexPath.row - 1];
-//        scoreCell.
+        scoreCell.detailTextLabel.textAlignment = NSTextAlignmentCenter;
         return scoreCell;
     }
 }
