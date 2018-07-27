@@ -8,7 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol XYAAttendanceViewDelegate <NSObject>
+
+- (void)pushAppealViewController:(NSDictionary *)dictionary;
+
+@end
+
 @interface XYAAttendanceView : UIView
+
+@property (nonatomic, weak) id <XYAAttendanceViewDelegate> delegate;
 
 @property (nonatomic, strong) UIButton *beginTimeButton;
 

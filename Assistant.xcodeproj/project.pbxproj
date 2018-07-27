@@ -11,6 +11,13 @@
 		580EC2052106ADD900B92004 /* username.png in Resources */ = {isa = PBXBuildFile; fileRef = 580EC2042106ADD900B92004 /* username.png */; };
 		580EC2072106ADFF00B92004 /* vercode.png in Resources */ = {isa = PBXBuildFile; fileRef = 580EC2062106ADFF00B92004 /* vercode.png */; };
 		580EC2092106AE1000B92004 /* password.png in Resources */ = {isa = PBXBuildFile; fileRef = 580EC2082106AE1000B92004 /* password.png */; };
+		582D9359210AB38C00C9D789 /* XYAAppealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 582D9358210AB38C00C9D789 /* XYAAppealViewController.m */; };
+		582D935C210AB3AC00C9D789 /* XYAAppealView.m in Sources */ = {isa = PBXBuildFile; fileRef = 582D935B210AB3AC00C9D789 /* XYAAppealView.m */; };
+		582D9360210B082000C9D789 /* XYACETViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 582D935F210B082000C9D789 /* XYACETViewController.m */; };
+		582D9364210B084900C9D789 /* XYACETView.m in Sources */ = {isa = PBXBuildFile; fileRef = 582D9363210B084900C9D789 /* XYACETView.m */; };
+		582D9367210B1CCD00C9D789 /* icon_CET_number.png in Resources */ = {isa = PBXBuildFile; fileRef = 582D9365210B1CCD00C9D789 /* icon_CET_number.png */; };
+		582D9368210B1CCD00C9D789 /* icon_CET_username.png in Resources */ = {isa = PBXBuildFile; fileRef = 582D9366210B1CCD00C9D789 /* icon_CET_username.png */; };
+		582D936A210B1F5200C9D789 /* clip.png in Resources */ = {isa = PBXBuildFile; fileRef = 582D9369210B1F5200C9D789 /* clip.png */; };
 		583633B32108001800105223 /* XYAEducationClassTableModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 583633B22108001700105223 /* XYAEducationClassTableModel.m */; };
 		5874460F2107276C00E6891F /* XYAEducationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5874460E2107276C00E6891F /* XYAEducationManager.m */; };
 		58A843A82108B33D0038E6BE /* arrow_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 58A843A72108B33D0038E6BE /* arrow_icon.png */; };
@@ -147,6 +154,17 @@
 		580EC2042106ADD900B92004 /* username.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = username.png; sourceTree = "<group>"; };
 		580EC2062106ADFF00B92004 /* vercode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vercode.png; sourceTree = "<group>"; };
 		580EC2082106AE1000B92004 /* password.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = password.png; sourceTree = "<group>"; };
+		582D9357210AB38C00C9D789 /* XYAAppealViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYAAppealViewController.h; sourceTree = "<group>"; };
+		582D9358210AB38C00C9D789 /* XYAAppealViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYAAppealViewController.m; sourceTree = "<group>"; };
+		582D935A210AB3AC00C9D789 /* XYAAppealView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYAAppealView.h; sourceTree = "<group>"; };
+		582D935B210AB3AC00C9D789 /* XYAAppealView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYAAppealView.m; sourceTree = "<group>"; };
+		582D935E210B082000C9D789 /* XYACETViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYACETViewController.h; sourceTree = "<group>"; };
+		582D935F210B082000C9D789 /* XYACETViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYACETViewController.m; sourceTree = "<group>"; };
+		582D9362210B084900C9D789 /* XYACETView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYACETView.h; sourceTree = "<group>"; };
+		582D9363210B084900C9D789 /* XYACETView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYACETView.m; sourceTree = "<group>"; };
+		582D9365210B1CCD00C9D789 /* icon_CET_number.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_CET_number.png; sourceTree = "<group>"; };
+		582D9366210B1CCD00C9D789 /* icon_CET_username.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_CET_username.png; sourceTree = "<group>"; };
+		582D9369210B1F5200C9D789 /* clip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clip.png; sourceTree = "<group>"; };
 		583633B12108001700105223 /* XYAEducationClassTableModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYAEducationClassTableModel.h; sourceTree = "<group>"; };
 		583633B22108001700105223 /* XYAEducationClassTableModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYAEducationClassTableModel.m; sourceTree = "<group>"; };
 		5874460D2107276C00E6891F /* XYAEducationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYAEducationManager.h; sourceTree = "<group>"; };
@@ -366,6 +384,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		582D935D210B080400C9D789 /* CETControllers */ = {
+			isa = PBXGroup;
+			children = (
+				582D935E210B082000C9D789 /* XYACETViewController.h */,
+				582D935F210B082000C9D789 /* XYACETViewController.m */,
+			);
+			path = CETControllers;
+			sourceTree = "<group>";
+		};
+		582D9361210B083100C9D789 /* CETViews */ = {
+			isa = PBXGroup;
+			children = (
+				582D9362210B084900C9D789 /* XYACETView.h */,
+				582D9363210B084900C9D789 /* XYACETView.m */,
+			);
+			path = CETViews;
+			sourceTree = "<group>";
+		};
 		5874460C2107274D00E6891F /* Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -394,6 +430,8 @@
 				58AF129D2108621C005381A5 /* XYAAttendanceView.m */,
 				58A843A92108BD140038E6BE /* XYAAttendanceTableViewCell.h */,
 				58A843AA2108BD140038E6BE /* XYAAttendanceTableViewCell.m */,
+				582D935A210AB3AC00C9D789 /* XYAAppealView.h */,
+				582D935B210AB3AC00C9D789 /* XYAAppealView.m */,
 			);
 			path = Attendance;
 			sourceTree = "<group>";
@@ -501,6 +539,7 @@
 		58F3528721016B9A001E6C16 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				582D9361210B083100C9D789 /* CETViews */,
 				58AF129B210861FB005381A5 /* Attendance */,
 				58F353A621020489001E6C16 /* EducationView */,
 			);
@@ -510,6 +549,7 @@
 		58F3528821016BA6001E6C16 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				582D935D210B080400C9D789 /* CETControllers */,
 				58F353BB210310EE001E6C16 /* Attendance */,
 				58F3528A21016BFB001E6C16 /* EducationController */,
 			);
@@ -676,6 +716,7 @@
 		58F352B52101BACC001E6C16 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				582D9369210B1F5200C9D789 /* clip.png */,
 				58AF129F21087874005381A5 /* Education */,
 				58F3538A2101DED2001E6C16 /* TabBar */,
 				58F352B62101BC60001E6C16 /* login */,
@@ -692,6 +733,8 @@
 				58F353882101D699001E6C16 /* WeChat.png */,
 				58F352B72101BC74001E6C16 /* people.png */,
 				58F352B92101BC74001E6C16 /* XUPT.png */,
+				582D9366210B1CCD00C9D789 /* icon_CET_username.png */,
+				582D9365210B1CCD00C9D789 /* icon_CET_number.png */,
 			);
 			path = login;
 			sourceTree = "<group>";
@@ -1001,6 +1044,8 @@
 			children = (
 				58F353BC21031107001E6C16 /* XYAAttendanceViewController.h */,
 				58F353BD21031107001E6C16 /* XYAAttendanceViewController.m */,
+				582D9357210AB38C00C9D789 /* XYAAppealViewController.h */,
+				582D9358210AB38C00C9D789 /* XYAAppealViewController.m */,
 			);
 			path = Attendance;
 			sourceTree = "<group>";
@@ -1154,7 +1199,10 @@
 			files = (
 				58F353982101FDF9001E6C16 /* ic_tab_index_myInfo_selected@2x.png in Resources */,
 				58F352BC2101BC74001E6C16 /* XUPT.png in Resources */,
+				582D936A210B1F5200C9D789 /* clip.png in Resources */,
 				58F352B3210182F5001E6C16 /* Main.storyboard in Resources */,
+				582D9367210B1CCD00C9D789 /* icon_CET_number.png in Resources */,
+				582D9368210B1CCD00C9D789 /* icon_CET_username.png in Resources */,
 				58F3536A2101BECC001E6C16 /* README.md in Resources */,
 				58F352582100C5F8001E6C16 /* Assets.xcassets in Resources */,
 				58F353912101E0F6001E6C16 /* ic_tab_index_activity_normal@2x.png in Resources */,
@@ -1270,6 +1318,7 @@
 				58F352E92101BEB3001E6C16 /* NSArray+MASAdditions.m in Sources */,
 				58F353712101BECC001E6C16 /* SDWebImageCompat.m in Sources */,
 				58F3525E2100C5F8001E6C16 /* main.m in Sources */,
+				582D9360210B082000C9D789 /* XYACETViewController.m in Sources */,
 				58F353182101BEBE001E6C16 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				58F353192101BEBE001E6C16 /* UIImageView+AFNetworking.m in Sources */,
 				58F353162101BEBE001E6C16 /* UIProgressView+AFNetworking.m in Sources */,
@@ -1280,11 +1329,13 @@
 				58FF6EA121058062000AE366 /* XYAEducationAPI.m in Sources */,
 				58F352EA2101BEB3001E6C16 /* View+MASAdditions.m in Sources */,
 				58F352E42101BEB3001E6C16 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
+				582D9359210AB38C00C9D789 /* XYAAppealViewController.m in Sources */,
 				58F3531E2101BEBE001E6C16 /* AFImageDownloader.m in Sources */,
 				583633B32108001800105223 /* XYAEducationClassTableModel.m in Sources */,
 				58F352E62101BEB3001E6C16 /* MASCompositeConstraint.m in Sources */,
 				58F3537B2101BECC001E6C16 /* UIButton+WebCache.m in Sources */,
 				58F3537A2101BECC001E6C16 /* UIView+WebCache.m in Sources */,
+				582D9364210B084900C9D789 /* XYACETView.m in Sources */,
 				58F353212101BEBE001E6C16 /* AFURLSessionManager.m in Sources */,
 				58F353702101BECC001E6C16 /* UIImage+MultiFormat.m in Sources */,
 				58F353172101BEBE001E6C16 /* UIRefreshControl+AFNetworking.m in Sources */,
@@ -1322,6 +1373,7 @@
 				58F352C82101BD49001E6C16 /* XYAMainLoginView.m in Sources */,
 				58F353AF21021B9A001E6C16 /* XYATimetableTableViewCell.m in Sources */,
 				58F353722101BECC001E6C16 /* SDWebImagePrefetcher.m in Sources */,
+				582D935C210AB3AC00C9D789 /* XYAAppealView.m in Sources */,
 				58FF6EAD2105FD95000AE366 /* XYALoginViewController.m in Sources */,
 				58F352C52101BD2F001E6C16 /* XYAMainLoginViewController.m in Sources */,
 				58F3533B2101BEC5001E6C16 /* JSONKeyMapper.m in Sources */,

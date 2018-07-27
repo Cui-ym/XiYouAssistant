@@ -9,11 +9,13 @@
 #import "XYAEducationViewController.h"
 #import "XYAEducationView.h"
 #import "XYAAttendanceViewController.h"
+#import "XYACETViewController.h"
 
 @interface XYAEducationViewController ()<XYAEducationViewDelegate>
 
 @property (nonatomic, strong) XYAEducationView *educationView;
 @property (nonatomic, strong) XYAAttendanceViewController *attendanceViewController;
+@property (nonatomic, strong) XYACETViewController *CETViewController;
 
 @end
 
@@ -42,9 +44,22 @@
 
 #pragma mark - XYAEducationViewDelegate
 
-- (void)selectedAttendanceCell {
-    self.attendanceViewController = [[XYAAttendanceViewController alloc] init];
-    [self.navigationController pushViewController:_attendanceViewController animated:YES];
+- (void)selectedCellWithtype:(NSString *)type {
+    if ([type isEqual:@"考勤查询"]) {
+        self.attendanceViewController = [[XYAAttendanceViewController alloc] init];
+        [self.navigationController pushViewController:_attendanceViewController animated:YES];
+    } else if ([type isEqual:@"CET"]) {
+        self.CETViewController = [[XYACETViewController alloc] init];
+        [self.navigationController pushViewController:_CETViewController animated:YES];
+    } else if ([type isEqual:@"期末成绩"]) {
+        
+    } else if ([type isEqual:@"计算机二级"]) {
+        
+    } else if ([type isEqual:@"课表"]) {
+        
+    } else if ([type isEqual:@"无课教室"]) {
+        
+    }
 }
 
 - (void)didReceiveMemoryWarning {

@@ -60,7 +60,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 0.01;
+    return 5.0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -82,13 +82,13 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    XYAAttendanceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"noButtonCell" forIndexPath:indexPath];
+    XYAAttendanceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     cell.timeLabel.text = @"2018.06.06";
     cell.weekLabel.text = @"星期三";
     cell.tagLabel.text = @"1-2";
     cell.classLabel.text = @"FZ155";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    NSArray *array = [NSArray arrayWithObjects:@"正常", @"请假", @"正常", @"旷课", @"迟到", @"迟到", @"正常", @"正常", @"正常", @"正常", nil];
+    NSArray *array = [NSArray arrayWithObjects:@"正常", @"请假", @"正常", @"旷课", @"迟到", @"迟到", @"正常", @"旷课", @"正常", @"旷课", nil];
     cell.detailLabel.text = array[indexPath.row];
     if([cell.detailLabel.text  isEqual: @"正常"]) {
         cell.appealButton.userInteractionEnabled = NO;
@@ -106,8 +106,103 @@
         cell.appealButton.userInteractionEnabled = YES;
         cell.detailLabel.textColor = [UIColor redColor];
         cell.appealButton.backgroundColor = [UIColor redColor];
+        cell.appealButton.tag = 100 + indexPath.row;
+        [cell.appealButton addTarget:self action:@selector(clickAppeelButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return cell;
+}
+#pragma mark - buttonAction
+
+- (void)clickAppeelButton:(UIButton *)sender {
+    NSLog(@"fafdasd");
+    NSInteger row = sender.tag - 100;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+    XYAAttendanceTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setValue:cell.tagLabel.text forKey:@"tag"];
+    [dic setValue:cell.timeLabel.text forKey:@"time"];
+    [dic setValue:self.classButton.titleLabel.text forKey:@"class"];
+    if ([_delegate respondsToSelector:@selector(pushAppealViewController:)]) {
+        [_delegate pushAppealViewController:dic];
+    }
+}
+
+#pragma mark -
+
+- (void)viewAddPickerView:(NSString *)type {
+    if ([type isEqual:@"time"]) {
+        _datePicker = [[UIDatePicker alloc] init];
+        _datePicker.backgroundColor = [UIColor whiteColor];
+        self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"zh"];
+        self.datePicker.datePickerMode = UIDatePickerModeDate;
+        [self.datePicker setMinimumDate:[NSDate date]];
+        NSDateComponents *minComponents = [[NSDateComponents alloc] init];
+        NSCalendar *myCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        NSDate *minDate = [myCal dateFromComponents:minComponents];
+        
+        [self.datePicker setMinimumDate:minDate];
+        [self addSubview:_datePicker];
+    }
+}
+
+#pragma mark - PeiChartView
+- (void)setData
+{
+    
+    double mult = 4;
+    NSArray *array = [NSArray arrayWithObjects:@"正常", @"迟到", @"旷课", @"请假", nil];
+    NSMutableArray *values = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 4; i++) {
+        [values addObject:[[PieChartDataEntry alloc] initWithValue:(arc4random_uniform(mult + 1)) label:array[i]]];
+    }
+    
+    PieChartDataSet *dataSet = [[PieChartDataSet alloc] initWithValues:values label:@""];
+    dataSet.sliceSpace = 2.0;
+    
+    // add a lot of colors
+    
+    NSMutableArray *colors = [[NSMutableArray alloc] init];
+    [colors addObjectsFromArray:ChartColorTemplates.vordiplom];
+    [colors addObjectsFromArray:ChartColorTemplates.joyful];
+    [colors addObjectsFromArray:ChartColorTemplates.colorful];
+    [colors addObjectsFromArray:ChartColorTemplates.liberty];
+    [colors addObjectsFromArray:ChartColorTemplates.pastel];
+    [colors addObject:[UIColor colorWithRed:51/255.f green:181/255.f blue:229/255.f alpha:1.f]];
+    
+    dataSet.colors = colors;
+    
+    PieChartData *data = [[PieChartData alloc] initWithDataSet:dataSet];
+    
+    NSNumberFormatter *pFormatter = [[NSNumberFormatter alloc] init];
+    pFormatter.numberStyle = NSNumberFormatterPercentStyle;
+    pFormatter.maximumFractionDigits = 1;
+    pFormatter.multiplier = @1.f;
+    pFormatter.percentSymbol = @" %";
+    [data setValueFormatter:[[ChartDefaultValueFormatter alloc] initWithFormatter:pFormatter]];
+    [data setValueFont:[UIFont systemFontOfSize:12 weight:UIFontWeightMedium]];
+    [data setValueTextColor:UIColor.whiteColor];
+    
+    _pieChartView.data = data;
+    [_pieChartView highlightValues:nil];
+    
+    
+    
+}
+
+#pragma mark - ChartView x-Titles Datasource
+- (NSString *)stringForValue:(double)value axis:(ChartAxisBase *)axis
+{
+    return self.xTitles[(int)value % self.xTitles.count];
+}
+#pragma mark - ChartView Delegate
+- (void)chartScaled:(ChartViewBase *)chartView scaleX:(CGFloat)scaleX scaleY:(CGFloat)scaleY
+{
+    NSLog(@"%2f %2f", scaleX, scaleY);
+}
+
+- (void)chartValueSelected:(ChartViewBase *)chartView entry:(ChartDataEntry *)entry highlight:(ChartHighlight *)highlight
+{
+    
 }
 
 #pragma mark - initUI
@@ -140,7 +235,7 @@
     [self addSubview:_backView];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-    [self.tableView registerClass:[XYAAttendanceTableViewCell class] forCellReuseIdentifier:@"noButtonCell"];
+    [self.tableView registerClass:[XYAAttendanceTableViewCell class] forCellReuseIdentifier:@"cell"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [_backView addSubview:_tableView];
@@ -242,77 +337,6 @@
     self.tableView.bounces = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.showsVerticalScrollIndicator = NO;
-    
-}
-- (void)viewAddPickerView:(NSString *)type {
-    if ([type isEqual:@"time"]) {
-        _datePicker = [[UIDatePicker alloc] init];
-        _datePicker.backgroundColor = [UIColor whiteColor];
-        self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"zh"];
-        self.datePicker.datePickerMode = UIDatePickerModeDate;
-        [self.datePicker setMinimumDate:[NSDate date]];
-        NSDate *date = [NSDate date];
-        [self addSubview:_datePicker];
-    }
-}
-
-#pragma mark - PeiChartView
-- (void)setData
-{
-    
-    double mult = 4;
-    NSArray *array = [NSArray arrayWithObjects:@"正常", @"迟到", @"旷课", @"请假", nil];
-    NSMutableArray *values = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 4; i++) {
-        [values addObject:[[PieChartDataEntry alloc] initWithValue:(arc4random_uniform(mult + 1)) label:array[i]]];
-    }
-    
-    PieChartDataSet *dataSet = [[PieChartDataSet alloc] initWithValues:values label:@""];
-    dataSet.sliceSpace = 2.0;
-    
-    // add a lot of colors
-    
-    NSMutableArray *colors = [[NSMutableArray alloc] init];
-    [colors addObjectsFromArray:ChartColorTemplates.vordiplom];
-    [colors addObjectsFromArray:ChartColorTemplates.joyful];
-    [colors addObjectsFromArray:ChartColorTemplates.colorful];
-    [colors addObjectsFromArray:ChartColorTemplates.liberty];
-    [colors addObjectsFromArray:ChartColorTemplates.pastel];
-    [colors addObject:[UIColor colorWithRed:51/255.f green:181/255.f blue:229/255.f alpha:1.f]];
-    
-    dataSet.colors = colors;
-    
-    PieChartData *data = [[PieChartData alloc] initWithDataSet:dataSet];
-    
-    NSNumberFormatter *pFormatter = [[NSNumberFormatter alloc] init];
-    pFormatter.numberStyle = NSNumberFormatterPercentStyle;
-    pFormatter.maximumFractionDigits = 1;
-    pFormatter.multiplier = @1.f;
-    pFormatter.percentSymbol = @" %";
-    [data setValueFormatter:[[ChartDefaultValueFormatter alloc] initWithFormatter:pFormatter]];
-    [data setValueFont:[UIFont systemFontOfSize:12 weight:UIFontWeightMedium]];
-    [data setValueTextColor:UIColor.whiteColor];
-    
-    _pieChartView.data = data;
-    [_pieChartView highlightValues:nil];
-    
-    
-    
-}
-
-#pragma mark - ChartView x-Titles Datasource
-- (NSString *)stringForValue:(double)value axis:(ChartAxisBase *)axis
-{
-    return self.xTitles[(int)value % self.xTitles.count];
-}
-#pragma mark - ChartView Delegate
-- (void)chartScaled:(ChartViewBase *)chartView scaleX:(CGFloat)scaleX scaleY:(CGFloat)scaleY
-{
-    NSLog(@"%2f %2f", scaleX, scaleY);
-}
-
-- (void)chartValueSelected:(ChartViewBase *)chartView entry:(ChartDataEntry *)entry highlight:(ChartHighlight *)highlight
-{
     
 }
 

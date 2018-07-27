@@ -10,7 +10,7 @@
 
 @protocol XYAEducationViewDelegate <NSObject>
 
-- (void)selectedAttendanceCell;
+- (void)selectedCellWithtype:(NSString *)type;
 
 @end
 

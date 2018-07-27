@@ -62,12 +62,15 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        if (indexPath.row == 1) {
-            if ([_delegate respondsToSelector:@selector(selectedAttendanceCell)]) {
-                [_delegate selectedAttendanceCell];
-            }
-        }
+    NSArray *array0 = [NSArray arrayWithObjects:@"占位", @"考勤查询", nil];
+    NSArray *array1 = [NSArray arrayWithObjects:@"CET", @"期末成绩", @"计算机二级", nil];
+    NSArray *array2 = [NSArray arrayWithObjects:@"课表", @"无课教室", nil];
+    NSMutableArray *cellArray = [NSMutableArray array];
+    [cellArray addObject:array0];
+    [cellArray addObject:array1];
+    [cellArray addObject:array2];
+    if ([_delegate respondsToSelector:@selector(selectedCellWithtype:)]) {
+            [_delegate selectedCellWithtype:cellArray[indexPath.section][indexPath.row]];
     }
 }
 

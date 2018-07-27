@@ -7,9 +7,10 @@
 //
 
 #import "XYAAttendanceViewController.h"
+#import "XYAAppealViewController.h"
 #import "XYAAttendanceView.h"
 
-@interface XYAAttendanceViewController ()
+@interface XYAAttendanceViewController () <XYAAttendanceViewDelegate>
 
 @property (nonatomic, strong) XYAAttendanceView *attendanceView;
 
@@ -25,6 +26,7 @@
     [super viewDidLoad];
     self.navigationItem.title = @"考勤信息";
     self.attendanceView = [[XYAAttendanceView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.attendanceView.delegate = self;
     [self.attendanceView.beginTimeButton addTarget:self action:@selector(clickAttendanceButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.attendanceView.endTimeButton addTarget:self action:@selector(clickAttendanceButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.attendanceView.classButton addTarget:self action:@selector(clickAttendanceButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -36,6 +38,13 @@
 - (void)clickAttendanceButton:(UIButton *)sender {
     NSLog(@"click");
     [self.attendanceView viewAddPickerView:@"time"];
+}
+
+#pragma mark - AttendanceDelegate
+- (void)pushAppealViewController:(NSDictionary *)dictionary {
+    NSLog(@"%@", dictionary);
+    XYAAppealViewController *appealViewController = [[XYAAppealViewController alloc] init];
+    [self.navigationController pushViewController:appealViewController animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
