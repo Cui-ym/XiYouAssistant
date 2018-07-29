@@ -24,15 +24,15 @@
 //    [userDefaults removeObjectForKey:@"username"];
 //    [userDefaults removeObjectForKey:@"password"];
     
-    if ([userDefaults objectForKey:@"username"] != nil) {
+//    if ([userDefaults objectForKey:@"username"] != nil) {
         XYAMainTabBarViewController *tabBarController = [[XYAMainTabBarViewController alloc] init];
         self.window.rootViewController = tabBarController;
-    } else {
-        XYAMainLoginViewController *loginViewController = [[XYAMainLoginViewController alloc] init];
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-        loginViewController.nextController = @"首页";
-        self.window.rootViewController = nav;
-    }
+//    } else {
+//        XYAMainLoginViewController *loginViewController = [[XYAMainLoginViewController alloc] init];
+//        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+//        loginViewController.nextController = @"首页";
+//        self.window.rootViewController = nav;
+//    }
     
     [self.window makeKeyAndVisible];
     return YES;
