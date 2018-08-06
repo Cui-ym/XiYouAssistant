@@ -7,8 +7,10 @@
 //
 
 #import "XYALibraryViewController.h"
+#import "XYALibraryMainView.h"
 
 @interface XYALibraryViewController ()
+@property (nonatomic, strong) XYALibraryMainView *libraryMainView;
 
 @end
 
@@ -25,12 +27,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.title = @"图书";
+    self.navigationItem.title = @"图 书";
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     [self.navigationItem setBackBarButtonItem:backItem];
     
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:0.20f green:0.60f blue:0.86f alpha:1.00f],NSForegroundColorAttributeName ,nil]];
     
+    self.libraryMainView = [[XYALibraryMainView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:_libraryMainView];
 }
 
 - (void)didReceiveMemoryWarning {
