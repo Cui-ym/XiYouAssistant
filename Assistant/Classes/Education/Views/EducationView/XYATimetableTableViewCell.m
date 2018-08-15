@@ -60,6 +60,7 @@
 # pragma mark - init
 
 - (void)layoutSubviews {
+    [super layoutSubviews];
     
     self.background.backgroundColor = [UIColor colorWithRed:0.36f green:0.68f blue:0.89f alpha:1.00f];
     self.background.layer.masksToBounds = YES;

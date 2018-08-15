@@ -58,7 +58,7 @@ static XYAEducationAPI *_kXYAEducationAPI = nil;
     [self.param setValue:term forKey:@"term_no"];
 }
 
-- (void)getLessionWithWeek:(NSNumber *)week term:(NSNumber *)term {
+- (void)getLessionWithWeek:(NSNumber *)week term:(NSString *)term {
     self.URL = @"http://jwkq.xupt.edu.cn:8080/User/GetStuClass";
     self.param = [NSMutableDictionary dictionary];
     [self.param setValue:@true forKey:@"json"];

@@ -7,13 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "XYAEducationResultModel.h"
 
-// 请求成功的回调block
-typedef void(^XYAEducationHandle)(XYAEducationResultModel * _Nullable resultModel);
-
-// 请求失败统一回调block
-typedef void(^ErrorHandle)(NSError * _Nonnull error);
 
 @interface XYAHttpSessionManager : NSObject
 
@@ -45,7 +39,8 @@ typedef void(^ErrorHandle)(NSError * _Nonnull error);
 - (void)doPost:(NSString *_Nonnull)url
      withParam:(NSDictionary *_Nullable)param
     withHeader:(NSDictionary *_Nullable)header
-       success:(XYAEducationHandle _Nullable )successBlock
-         error:(ErrorHandle _Nonnull )errorBlock;
+      progress:(void (^_Nullable)(NSProgress *_Nullable progress))progress
+       success:(void (^_Nullable)(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject))successBlock
+         error:(void (^_Nullable)(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error))errorBlock;
 
 @end

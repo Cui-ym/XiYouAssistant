@@ -31,7 +31,7 @@
 - (void)getLessionWithTerm:(NSNumber *)term;
 
 // 每星期课程
-- (void)getLessionWithWeek:(NSNumber *)week term:(NSNumber *)term;
+- (void)getLessionWithWeek:(NSNumber *)week term:(NSString *)term;
 
 // 考勤信息
 - (void)getAttendListWithTimeDate:(NSString *)timeDate status:(NSString *)status flagArray:(NSArray *)flagArray page:(NSInteger)page Row:(NSInteger)row;

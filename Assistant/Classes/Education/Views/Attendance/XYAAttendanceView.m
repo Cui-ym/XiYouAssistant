@@ -9,11 +9,12 @@
 #import "XYAAttendanceView.h"
 #import "XYAAttendanceTableViewCell.h"
 #import "Assistant-Bridging-Header.h"
+#import "XYAPickerView.h"
 #import "Masonry.h"
 
 #define RGB(__r,__g,__b) [UIColor colorWithRed:(__r)/255.0 green:(__g)/255.0 blue:(__b)/255.0 alpha:1]
 
-@interface XYAAttendanceView () <UITableViewDelegate, UITableViewDataSource, ChartViewDelegate, IChartAxisValueFormatter>
+@interface XYAAttendanceView () <UITableViewDelegate, UITableViewDataSource, ChartViewDelegate, IChartAxisValueFormatter, XYAPickerViewDelegate>
 
 @property (nonatomic, strong) UIImageView *timeImageView;
 
@@ -31,9 +32,8 @@
 @property (nonatomic, strong) NSArray *colorArray;
 
 /// 选择器
-@property (nonatomic, strong) UIDatePicker *datePicker;
 
-@property (nonatomic, strong) UIPickerView *pickerView;
+@property (nonatomic, strong) XYAPickerView *pickerView;
 
 @end
 
@@ -111,6 +111,7 @@
     }
     return cell;
 }
+
 #pragma mark - buttonAction
 
 - (void)clickAppeelButton:(UIButton *)sender {
@@ -127,22 +128,27 @@
     }
 }
 
-#pragma mark -
+#pragma mark - pickerView
 
-- (void)viewAddPickerView:(NSString *)type {
+- (void)viewAddPickerViewWithType:(NSString *)type buttonTag:(NSInteger)tag {
+    self.buttonTag = tag;
     if ([type isEqual:@"time"]) {
-        _datePicker = [[UIDatePicker alloc] init];
-        _datePicker.backgroundColor = [UIColor whiteColor];
-        self.datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"zh"];
-        self.datePicker.datePickerMode = UIDatePickerModeDate;
-        [self.datePicker setMinimumDate:[NSDate date]];
-        NSDateComponents *minComponents = [[NSDateComponents alloc] init];
-        NSCalendar *myCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-        NSDate *minDate = [myCal dateFromComponents:minComponents];
-        
-        [self.datePicker setMinimumDate:minDate];
-        [self addSubview:_datePicker];
+        self.pickerView = [[XYAPickerView alloc] initWithFrame:self.bounds];
+        self.pickerView.delegate = self;
+        [self addSubview:_pickerView];
+        [self.pickerView setPickerWithType:@"time"];
+    } else {
+        self.pickerView = [[XYAPickerView alloc] initWithFrame:self.bounds];
+        self.pickerView.delegate = self;
+        [self addSubview:_pickerView];
+        self.pickerView.array = @[@"C语言程序设计", @"JAVA程序设计", @"大学英语", @"体育", @"高等数学"];
+        [self.pickerView setPickerWithType:@"picker"];
     }
+}
+
+- (void)clickPickerViewSureButtonWithString:(NSString *)string {
+    UIButton *button = [self viewWithTag:self.buttonTag];
+    [button setTitle:string forState:UIControlStateNormal];
 }
 
 #pragma mark - PeiChartView
@@ -158,8 +164,6 @@
     
     PieChartDataSet *dataSet = [[PieChartDataSet alloc] initWithValues:values label:@""];
     dataSet.sliceSpace = 2.0;
-    
-    // add a lot of colors
     
     NSMutableArray *colors = [[NSMutableArray alloc] init];
     [colors addObjectsFromArray:ChartColorTemplates.vordiplom];
@@ -190,18 +194,18 @@
 }
 
 #pragma mark - ChartView x-Titles Datasource
-- (NSString *)stringForValue:(double)value axis:(ChartAxisBase *)axis
-{
+
+- (NSString *)stringForValue:(double)value axis:(ChartAxisBase *)axis {
     return self.xTitles[(int)value % self.xTitles.count];
 }
+
 #pragma mark - ChartView Delegate
-- (void)chartScaled:(ChartViewBase *)chartView scaleX:(CGFloat)scaleX scaleY:(CGFloat)scaleY
-{
+
+- (void)chartScaled:(ChartViewBase *)chartView scaleX:(CGFloat)scaleX scaleY:(CGFloat)scaleY {
     NSLog(@"%2f %2f", scaleX, scaleY);
 }
 
-- (void)chartValueSelected:(ChartViewBase *)chartView entry:(ChartDataEntry *)entry highlight:(ChartHighlight *)highlight
-{
+- (void)chartValueSelected:(ChartViewBase *)chartView entry:(ChartDataEntry *)entry highlight:(ChartHighlight *)highlight {
     
 }
 
@@ -219,14 +223,17 @@
     self.beginTimeButton = [[UIButton alloc] init];
     self.beginTimeButton.tag = 1001;
     [self addSubview:_beginTimeButton];
+    [self.beginTimeButton setTitle:@"18-09-01" forState:UIControlStateNormal];
     
     self.endTimeButton = [[UIButton alloc] init];
     self.endTimeButton.tag = 1002;
     [self addSubview:_endTimeButton];
+    [self.endTimeButton setTitle:@"18-09-30" forState:UIControlStateNormal];
     
     self.classButton = [[UIButton alloc] init];
     self.classButton.tag = 1003;
     [self addSubview:_classButton];
+    [self.classButton setTitle:@"C语言程序设计" forState:UIControlStateNormal];
     
     self.zhiLabel = [[UILabel alloc] init];
     [self addSubview:_zhiLabel];
@@ -273,7 +280,6 @@
     self.beginTimeButton.layer.borderWidth = 3;
     self.beginTimeButton.layer.borderColor = [UIColor colorWithRed:0.36f green:0.68f blue:0.89f alpha:1.00f].CGColor;
     [self.beginTimeButton setTitleColor:[UIColor colorWithRed:0.36f green:0.68f blue:0.89f alpha:1.00f] forState:UIControlStateNormal];
-    [self.beginTimeButton setTitle:@"18-09-01" forState:UIControlStateNormal];
     
     [self.endTimeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.mas_right).offset(-15);
@@ -286,7 +292,6 @@
     self.endTimeButton.layer.borderWidth = 3;
     self.endTimeButton.layer.borderColor = [UIColor colorWithRed:0.36f green:0.68f blue:0.89f alpha:1.00f].CGColor;
     [self.endTimeButton setTitleColor:[UIColor colorWithRed:0.36f green:0.68f blue:0.89f alpha:1.00f] forState:UIControlStateNormal];
-    [self.endTimeButton setTitle:@"18-09-30" forState:UIControlStateNormal];
     
     [self.zhiLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.beginTimeButton.mas_right);
@@ -308,7 +313,6 @@
     self.classButton.layer.borderWidth = 3;
     self.classButton.layer.borderColor = [UIColor colorWithRed:0.36f green:0.68f blue:0.89f alpha:1.00f].CGColor;
     [self.classButton setTitleColor:[UIColor colorWithRed:0.36f green:0.68f blue:0.89f alpha:1.00f] forState:UIControlStateNormal];
-    [self.classButton setTitle:@"C语言程序设计" forState:UIControlStateNormal];
     
     [self.pieChartView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self);

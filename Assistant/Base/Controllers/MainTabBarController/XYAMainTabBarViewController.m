@@ -60,7 +60,7 @@ typedef NS_ENUM(NSInteger, XYMainTabType) {
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
         nav.navigationBar.barTintColor = [UIColor colorWithRed:0.20f green:0.60f blue:0.86f alpha:1.00f];
         [nav.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor],
-                                                    NSFontAttributeName            : [UIFont systemFontOfSize:20]}];
+                                                    NSFontAttributeName            : [UIFont systemFontOfSize:18]}];
         nav.navigationBar.tintColor = [UIColor whiteColor];
         nav.navigationBar.translucent = NO;
         

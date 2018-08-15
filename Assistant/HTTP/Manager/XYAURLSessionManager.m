@@ -56,7 +56,7 @@ static XYAURLSessionManager *_kXYAURLSessionManager = nil;
             // 请求成功数据处理
             NSError *error;
             XYAEducationResultModel *result = [[XYAEducationResultModel alloc] initWithDictionary:responseObject error:&error];
-            NSLog(@"%@  %@", responseObject, result);
+//            NSLog(@"%@  %@", responseObject, result);
             if (result.IsSucceed == 1) {
                 successBlock(result);
             } else {

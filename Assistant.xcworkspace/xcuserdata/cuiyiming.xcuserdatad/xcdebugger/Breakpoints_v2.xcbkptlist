@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Assistant/Classes/Education/Views/Attendance/XYAAttendanceView.m"
-            timestampString = "554393716.919398"
+            filePath = "Assistant/HTTP/Manager/XYAEducationManager.m"
+            timestampString = "556012460.611933"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
+            landmarkName = "-fetchEducationClassTableWithTermNumber:week:success:error:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Assistant/Classes/Education/Views/CETViews/XYACETView.m"
-            timestampString = "554393716.919502"
+            filePath = "Assistant/DB/XYALessonTableDBManager.m"
+            timestampString = "556014995.710034"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "-getLessonModelWithWeek:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

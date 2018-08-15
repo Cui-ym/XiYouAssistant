@@ -11,6 +11,6 @@
 
 @interface XYAEducationManager : NSObject<XYAEducationProtocol>
 
-
++ (instancetype)educationManager;
 
 @end

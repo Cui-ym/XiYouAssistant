@@ -26,6 +26,8 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 
-- (void)viewAddPickerView:(NSString *)type;
+@property (nonatomic, assign) NSInteger buttonTag;
+
+- (void)viewAddPickerViewWithType:(NSString *)type buttonTag:(NSInteger)tag;
 
 @end

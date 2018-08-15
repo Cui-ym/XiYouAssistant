@@ -14,6 +14,6 @@
 
 @property (nonatomic, copy) NSString <Optional>*Msg;
 
-@property (nonatomic, copy) NSDictionary <Optional>*Obj;
+@property (nonatomic, copy) id <Optional> Obj;
 
 @end

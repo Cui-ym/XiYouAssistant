@@ -53,28 +53,15 @@ static XYAHttpSessionManager *_kXYAHttpSessionManagerInstance = nil;
 - (void)doPost:(NSString *)url
      withParam:(NSDictionary *)param
     withHeader:(NSDictionary *)header
-       success:(XYAEducationHandle)successBlock
-         error:(ErrorHandle)errorBlock {
+      progress:(void (^_Nullable)(NSProgress *_Nullable progress))progress
+       success:(void (^ _Nullable)(NSURLSessionDataTask * _Nonnull, id _Nullable))successBlock
+         error:(void (^ _Nullable)(NSURLSessionDataTask * _Nullable, NSError * _Nonnull))errorBlock {
     NSArray *keys = [header allKeys];
     for (int i = 0; i < keys.count; i++) {
         [_manager.requestSerializer setValue:header[keys[i]] forHTTPHeaderField:keys[i]];
     }
     
-    [self.manager POST:url parameters:param progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSError *error;
-        XYAEducationResultModel *result = [[XYAEducationResultModel alloc] initWithDictionary:responseObject error:&error];
-        if (result.IsSucceed == 1) {
-            successBlock(result);
-        } else {
-            NSError *error = [[NSError alloc] initWithDomain:result.Msg code:(NSInteger)result.IsSucceed userInfo:nil];
-            errorBlock(error);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@", error);
-        errorBlock(error);
-    }];
+    [_manager POST:url parameters:param progress:progress success:successBlock failure:errorBlock];
     
 }
 @end

@@ -8,6 +8,7 @@
 
 #ifndef XYAEducationProtocol_h
 #define XYAEducationProtocol_h
+#import "XYAEducationAPI.h"
 #import "XYAEducationResultModel.h"
 #import "XYAEducationClassTableModel.h"
 
@@ -43,11 +44,11 @@ typedef void(^XYAEducationClassTableHandler)(XYAEducationClassTableModel * __nul
 /**
  获取智慧教室信息
 
- @param param 请求体
+ @param educationAPI api
  @param successBlock 成功回调
  @param errorBlock 错误回调
  */
-- (void)fetchEducationResultWithParam:(NSDictionary *_Nonnull)param
+- (void)fetchEducationResultWithEducationAPI:(XYAEducationAPI *_Nonnull)educationAPI
                               success:(nullable XYAEducationResultHandler)successBlock
                                 error:(nonnull XYAEducationErrorHandler)errorBlock;
 
@@ -84,7 +85,7 @@ typedef void(^XYAEducationClassTableHandler)(XYAEducationClassTableModel * __nul
  @param successBlock 成功回调
  @param errorBlock 错误回调
  */
-- (void)fetchEducationClassTableWithTermNumber:(NSInteger)term
+- (void)fetchEducationClassTableWithTermNumber:(NSString *_Nonnull)term
                                           week:(NSInteger)week
                                        success:(nullable XYAEducationClassTableHandler)successBlock
                                          error:(nonnull XYAEducationErrorHandler)errorBlock;

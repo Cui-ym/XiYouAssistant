@@ -47,6 +47,7 @@
 }
 
 - (void)layoutSubviews {
+    [super layoutSubviews];
     
     self.backgroundColor = [UIColor colorWithRed:0.95f green:0.95f blue:0.95f alpha:1.00f];
     

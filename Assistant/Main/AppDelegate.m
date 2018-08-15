@@ -19,12 +19,14 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    NSString *deviceUUID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    NSLog(@"%@",deviceUUID);
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//    [userDefaults removeObjectForKey:@"username"];
-//    [userDefaults removeObjectForKey:@"password"];
     
-    if ([userDefaults objectForKey:@"username"] != nil) {
+    [userDefaults removeObjectForKey:@"lessonDBIsExist"];
+    
+    if ([[userDefaults objectForKey:@"lessonDBIsExist"] isEqualToString:@"YES"]) {
         XYAMainTabBarViewController *tabBarController = [[XYAMainTabBarViewController alloc] init];
         self.window.rootViewController = tabBarController;
     } else {

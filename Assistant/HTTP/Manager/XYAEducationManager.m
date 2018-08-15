@@ -6,22 +6,68 @@
 //  Copyright © 2018年 崔一鸣. All rights reserved.
 //
 
-#import "XYAEducationManager.h"
+#import "XYAEducationResultModel.h"
+#import "XYALessonTableDBManager.h"
 #import "XYAHttpSessionManager.h"
 #import "XYAURLSessionManager.h"
+#import "XYAEducationManager.h"
 #import "XYAEducationAPI.h"
 
 @interface XYAEducationManager()
 
 @property (nonatomic, strong) XYAEducationAPI *educationAPI;
 
+@property (nonatomic, assign) BOOL lessonDBIsExist;
+
 @end
 
 @implementation XYAEducationManager
 
-- (void)fetchEducationResultWithParam:(NSDictionary *)param success:(XYAEducationResultHandler)successBlock error:(XYAEducationErrorHandler)errorBlock {
-    self.educationAPI = [XYAEducationAPI shareEducationAPI];
+static XYAEducationManager *_kXYAEducationManagerInstance = nil;
+
++ (instancetype)educationManager {
     
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _kXYAEducationManagerInstance = [[super alloc] init];
+        [_kXYAEducationManagerInstance initializeXYALessonTableDataBase];
+    });
+    
+    return _kXYAEducationManagerInstance;
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
+
+- (void)initializeXYALessonTableDataBase {
+    //    NSMutableArray *array = [NSMutableArray array];
+    //    for (NSInteger i = 0; i < 20 ; i++) {
+    //        [array addObject:@0];
+    //    }
+    //    if ([userDefault objectForKey:@"lessonDBIsExist"] == nil) {
+    //        [array addObject:@0];
+    //    }
+    
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    NSString *isExist = [userDefault objectForKey:@"lessonDBIsExist"];
+    BOOL result = [[XYALessonTableDBManager sharedManager] createLessonTable];
+    if (isExist == nil || [isExist isEqualToString:@"NO"]) {
+        if (result) {
+            [userDefault setObject:@"YES" forKey:@"lessonDBIsExist"];
+            _lessonDBIsExist = YES;
+        } else {
+            
+            [userDefault setObject:@"NO" forKey:@"lessonDBIsExist"];
+        }
+        [userDefault synchronize];
+    } else {
+        _lessonDBIsExist = YES;
+    }
 }
 
 - (void)fetchEducationVercodeFromNetSuccess:(nullable NSDataHandler)successBlock error:(nonnull XYAEducationErrorHandler)errorBlock {
@@ -61,15 +107,68 @@
     
 }
 
-- (void)fetchEducationClassTableWithTermNumber:(NSInteger)term week:(NSInteger)week success:(nullable XYAEducationClassTableHandler)successBlock error:(nonnull XYAEducationErrorHandler)errorBlock {
+- (void)fetchEducationResultWithEducationAPI:(XYAEducationAPI *_Nonnull)educationAPI success:(XYAEducationResultHandler)successBlock error:(XYAEducationErrorHandler)errorBlock {
+    
+    NSMutableDictionary *header = [NSMutableDictionary dictionary];
+    if (educationAPI.cookie != nil) {
+        [header setValue:educationAPI.cookie forKey:@"Cookie"];
+    }
+    
+    XYAHttpSessionManager *manager = [XYAHttpSessionManager sharedManager];
+    [manager doPost:educationAPI.URL withParam:educationAPI.param withHeader:nil progress:^(NSProgress * _Nullable progress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSError *error = nil;
+//        NSLog(@"%@", responseObject);
+        XYAEducationResultModel *model = [[XYAEducationResultModel alloc] initWithData:responseObject error:&error];
+        if (model.IsSucceed == 1) {
+            successBlock(model);
+        }
+    } error:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        errorBlock(error);
+    }];
+   
+}
+
+- (void)fetchEducationClassTableWithTermNumber:(NSString *)term week:(NSInteger)week success:(nullable XYAEducationClassTableHandler)successBlock error:(nonnull XYAEducationErrorHandler)errorBlock {
     self.educationAPI = [XYAEducationAPI shareEducationAPI];
-    [self.educationAPI getLessionWithWeek:[NSNumber numberWithInteger:week] term:[NSNumber numberWithInteger:term]];
+    [self.educationAPI getLessionWithWeek:[NSNumber numberWithInteger:5] term:term];
     XYAHttpSessionManager *manager = [XYAHttpSessionManager sharedManager];
     NSDictionary *header = @{@"Cookie" : _educationAPI.cookie};
-    [manager doPost:_educationAPI.URL withParam:_educationAPI.param withHeader:header success:^(XYAEducationResultModel * _Nullable resultModel) {
-        NSLog(@"%@", resultModel);
-    } error:^(NSError * _Nonnull error) {
-        NSLog(@"%@", error);
+    [manager doPost:_educationAPI.URL withParam:_educationAPI.param withHeader:header progress:^(NSProgress * _Nullable progress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        NSLog(@"%@", [[NSString alloc] initWithData:responseObject encoding:kCFStringEncodingUTF8]);
+        NSError *error = nil;
+        XYAEducationClassTableModel *model = [[XYAEducationClassTableModel alloc] initWithData:responseObject error:&error];
+        model = [model lessonArraySort];
+        for (XYAEducationClassTableItemModel *obj in model.Obj) {
+            obj.WEEK = [NSString stringWithFormat:@"%ld", week];
+        }
+        NSLog(@"%@", model);
+        if (model.IsSucceed == true) {
+            if (_lessonDBIsExist == YES) {
+                if (week == 1) {        // 第一周清空数据库 全部重新添加
+                    [[XYALessonTableDBManager sharedManager] resetAllData];
+                }
+                [[XYALessonTableDBManager sharedManager] insertLessonTableModels:model];
+            }
+            successBlock(model);
+        } else {
+            if (_lessonDBIsExist == YES) {
+                successBlock([[XYALessonTableDBManager sharedManager] getLessonModelWithWeek:week]);
+            } else {
+                NSError *error = [[NSError alloc] initWithDomain:model.Msg code:(NSInteger)model.IsSucceed userInfo:nil];
+                errorBlock(error);
+            }
+        }
+        
+    } error:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (_lessonDBIsExist == YES) {
+            successBlock([[XYALessonTableDBManager sharedManager] getLessonModelWithWeek:week]);
+        } else {
+            errorBlock(error);
+        }
     }];
 }
 

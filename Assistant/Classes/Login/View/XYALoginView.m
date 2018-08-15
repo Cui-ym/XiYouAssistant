@@ -111,7 +111,8 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
+    self.userNameField.text = @"04161029";
+    self.passwordField.text = @"030173";
     [self.backGround mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self);
         make.width.equalTo(self.mas_width).multipliedBy(0.8);

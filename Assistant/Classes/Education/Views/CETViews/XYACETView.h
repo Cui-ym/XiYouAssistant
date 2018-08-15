@@ -8,14 +8,26 @@
 
 #import <UIKit/UIKit.h>
 
-@interface XYACETView : UIView
+@class XYAUnderLinerTextField;
+@class XYAClipBackgroundView;
+@class XYAComputerVercodeView;
 
-@property (nonatomic, strong) UIImageView *vercodeImageView;
+@interface XYACETView : UIView
 
 @property (nonatomic, strong) UIButton *queryButton;
 
-@property (nonatomic, strong) UIView *backView;
+@property (nonatomic, strong) XYAComputerVercodeView *vercodeView;
 
-- (void)showScoreWithScoreDictionary:(NSDictionary *)dic;
+@property (nonatomic, strong) XYAClipBackgroundView *backView;
+
+@property (nonatomic, strong) XYAUnderLinerTextField *userTextField;
+
+@property (nonatomic, strong) XYAUnderLinerTextField *numberTextField;
+
+@property (nonatomic, copy) NSDictionary *gradeDictionary;
+
+- (void)showScoreWithScoreTableView;
+
+- (void)initVercodeViewWithImageDate:(NSData *)imageData;
 
 @end
