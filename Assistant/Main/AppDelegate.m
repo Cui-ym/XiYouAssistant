@@ -26,17 +26,21 @@
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
+<<<<<<< HEAD
     [userDefaults removeObjectForKey:@"lessonDBIsExist"];
     
     if ([[userDefaults objectForKey:@"lessonDBIsExist"] isEqualToString:@"YES"]) {
+=======
+//    if ([userDefaults objectForKey:@"username"] != nil) {
+>>>>>>> ca9d6a7c4c1842fb644c59fb060e35765268acae
         XYAMainTabBarViewController *tabBarController = [[XYAMainTabBarViewController alloc] init];
         self.window.rootViewController = tabBarController;
-    } else {
-        XYAMainLoginViewController *loginViewController = [[XYAMainLoginViewController alloc] init];
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
-        loginViewController.nextController = @"首页";
-        self.window.rootViewController = nav;
-    }
+//    } else {
+//        XYAMainLoginViewController *loginViewController = [[XYAMainLoginViewController alloc] init];
+//        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+//        loginViewController.nextController = @"首页";
+//        self.window.rootViewController = nav;
+//    }
     
     [self.window makeKeyAndVisible];
     return YES;
