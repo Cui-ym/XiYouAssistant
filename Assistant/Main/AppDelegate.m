@@ -19,8 +19,10 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSString *deviceUUID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    NSLog(@"%@",deviceUUID);
+    // 获取设备号
+//    NSString *deviceUUID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+//    NSLog(@"%@",deviceUUID);
+    
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
